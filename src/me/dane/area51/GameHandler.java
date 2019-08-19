@@ -2,9 +2,11 @@ package me.dane.area51;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Random;
 
 import me.dane.area51.framework.GameObject;
 import me.dane.area51.framework.ObjectId;
+import me.dane.area51.objects.Alien;
 import me.dane.area51.objects.Block;
 
 public class GameHandler {
@@ -34,7 +36,18 @@ public class GameHandler {
  	public void removeObject(GameObject obj) {
  		this.obj.remove(obj);
  	}
- 	
+
+ 	public void removeAlien() {
+ 		for (int i = 0; i < obj.size(); i++) {
+ 			if (obj.get(i).getId() == ObjectId.Alien) {
+ 				Alien a = (Alien) obj.get(i);
+ 				if (a.isHit()) {
+ 					obj.remove(i);
+				}
+
+			}
+		}
+	}
  	
 	public void createLevel() {
 		
@@ -47,7 +60,12 @@ public class GameHandler {
 			addObject(new Block(0, yy, ObjectId.Block));
 			addObject(new Block(5472, yy, ObjectId.Block));
 		}
-		
+
+		for (int i = 0; i < 10; i++) {
+			Random rand = new Random();
+			addObject(new Alien(4000 + rand.nextInt(1500), rand.nextInt(7000), ObjectId.Alien, this));
+		}
+
 	}
  	
 }
