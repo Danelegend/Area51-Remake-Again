@@ -85,6 +85,9 @@ public class Main extends Canvas implements Runnable {
 	public void run() {
 		init();
 		this.requestFocus();
+
+		//Tick system not done by me
+
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -139,10 +142,6 @@ public class Main extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//---------------------
-		// Run for menu
-		
-		//Run for game
-		
 		//Constant Background for game. Will draw over this
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
