@@ -15,6 +15,7 @@ import me.dane.area51.objects.Player;
 import me.dane.area51.zone.Area51Zone;
 import me.dane.area51.zone.SafeZone;
 import me.dane.area51.zone.TrackingZone;
+import me.dane.area51.objects.Score;
 
 public class Main extends Canvas implements Runnable {
 
@@ -35,11 +36,14 @@ public class Main extends Canvas implements Runnable {
 	TrackingZone tz;
 	SafeZone sz;
 	
+	Score score;
+	
 	public Main() {
 		sh = new ScreenHandler();
 		sz = new SafeZone();
 		tz = new TrackingZone();
 		az = new Area51Zone();
+		score = new Score(WIDTH);
 	}
 	
 	public static void main(String[] args) {
@@ -151,6 +155,7 @@ public class Main extends Canvas implements Runnable {
 		sz.display(g);
 		tz.display(g);
 		az.display(g);
+		score.display(g);
 		
 		gh.render(g);
 		
