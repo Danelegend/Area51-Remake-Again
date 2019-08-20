@@ -9,22 +9,18 @@ import java.util.LinkedList;
 
 public class Alien extends GameObject {
 
-    private boolean isCaptured;
     private GameHandler gh;
     private Image img;
-    private int width;
-    private int height;
+    private final int width = 50;
+    private final int height = 100;
 
     private boolean hit;
 
     public Alien(float x, float y, ObjectId id, GameHandler gh) {
         super(x, y, id);
-        String location = "Z:\\My Documents\\Area51-Remake-Again-master\\200px-Roger_Smith.png";
+        String location = "rick-and-morty-hq-resource-pink-rick-and-motry-alien-character-png-clipart-thumbnail.jpg ";
         img = Toolkit.getDefaultToolkit().getImage(location);
         this.gh = gh;
-        width = 50;
-        height = 100;
-        isCaptured = false;
         this.hit = false;
     }
 

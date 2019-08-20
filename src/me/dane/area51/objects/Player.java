@@ -5,21 +5,24 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.LinkedList;
-
 import me.dane.area51.GameHandler;
 import me.dane.area51.framework.GameObject;
 import me.dane.area51.framework.ObjectId;
 
 public class Player extends GameObject {
 
-	private float width = 48;
-	private float height = 96;
-	
-	private float gravity = 0.5f;
-	
-	private final float MAX_SPEED = 9.8f;
+	private final float width = 48;
+	private final float height = 96;
 	
 	private boolean isControlled;
+	
+	private final double POS_MAX_SPEED = 7;
+	private final double NEG_MAX_SPEED = -7;
+	
+	private boolean narutoActive;
+	private boolean narutoAvaliable;
+	
+	private int counter;
 	
 	private GameHandler gh;
 	
@@ -31,7 +34,11 @@ public class Player extends GameObject {
 		this.playerID = playerID;
 		this.gh = gh;
 		
+		counter = 0;
+		
 		isControlled = false;
+		narutoActive = false;
+		narutoAvaliable = true;
 		
 		if (playerID == 0) {
 			isControlled = true;
@@ -40,6 +47,34 @@ public class Player extends GameObject {
 	}
 
 	public void tick(LinkedList<GameObject> obj) {
+		
+		if (narutoAvaliable == false) {
+			counter++;
+			System.out.println(counter);
+			resetCounter();
+		}
+		
+		if (narutoActive) {
+			velX = (float) (velX * 1.4);
+			velY = (float) (velY * 1.4);
+		}
+		
+		if (velX > POS_MAX_SPEED) {
+			velX = (float) POS_MAX_SPEED;
+		}
+		
+		if (velX < NEG_MAX_SPEED) {
+			velX = (float) NEG_MAX_SPEED;
+		}
+		
+		if (velY > POS_MAX_SPEED) {
+			velY = (float) POS_MAX_SPEED;
+		}
+		
+		if (velY < NEG_MAX_SPEED) {
+			velY = (float) NEG_MAX_SPEED;
+		} 
+ 		
 		x += velX;
 		y += velY;
 		
@@ -116,6 +151,46 @@ public class Player extends GameObject {
 	
 	public int getPlayerID() {
 		return playerID;
+	}
+	
+	public boolean narutoActive() {
+		return narutoActive;
+	}
+	
+	public void setNarutoActive(boolean boo) {
+		this.narutoActive = boo;
+	}
+	
+	public void setNarutoAvaliable(boolean boo) {
+		this.narutoAvaliable = boo;
+	}
+	
+	private void resetCounter() {
+		
+		if (counter >= 100) {
+			narutoActive = false;
+		}
+		
+		if (counter >= 1100) {
+			narutoAvaliable = true;
+			counter = 0;
+		}
+	}
+	
+	public String getZone() {
+		if (x >= 0 && x <= 1000) {
+			return "sz";
+		}
+		
+		if (x > 1000 && x <= 4000) {
+			return "tz";
+		}
+		
+		if (x > 4000 && x <= 5500) {
+			return "51z";
+		}
+		
+		return "none";
 	}
 	
 }

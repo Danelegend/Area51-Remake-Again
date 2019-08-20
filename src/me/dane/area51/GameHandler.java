@@ -8,6 +8,8 @@ import me.dane.area51.framework.GameObject;
 import me.dane.area51.framework.ObjectId;
 import me.dane.area51.objects.Alien;
 import me.dane.area51.objects.Block;
+import me.dane.area51.objects.Enemy;
+import me.dane.area51.objects.Player;
 
 public class GameHandler {
 
@@ -37,6 +39,17 @@ public class GameHandler {
  		this.obj.remove(obj);
  	}
 
+ 	public void killPlayerForBounds() {
+ 		for (int i = 0; i < obj.size(); i++) {
+ 			if (obj.get(i).getId() == ObjectId.Player) {
+ 				Player p = (Player) obj.get(i);
+ 				if (p.getZone() == "none") {
+ 					obj.remove(i);
+ 				}
+ 			}
+ 		}
+ 	}
+ 	
  	public void removeAlien() {
  		for (int i = 0; i < obj.size(); i++) {
  			if (obj.get(i).getId() == ObjectId.Alien) {
@@ -61,9 +74,14 @@ public class GameHandler {
 			addObject(new Block(5472, yy, ObjectId.Block));
 		}
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i <= 10; i++) {
 			Random rand = new Random();
 			addObject(new Alien(4000 + rand.nextInt(1500), rand.nextInt(7000), ObjectId.Alien, this));
+		}
+		
+		for (int i = 0; i <= 10; i++) {
+			Random rand = new Random();
+			addObject(new Enemy(1000 + rand.nextInt(4500), rand.nextInt(7000), ObjectId.Enemy, this));
 		}
 
 	}

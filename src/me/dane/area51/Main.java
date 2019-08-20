@@ -15,7 +15,6 @@ import me.dane.area51.objects.Player;
 import me.dane.area51.zone.Area51Zone;
 import me.dane.area51.zone.SafeZone;
 import me.dane.area51.zone.TrackingZone;
-import me.dane.area51.objects.Score;
 
 public class Main extends Canvas implements Runnable {
 
@@ -36,14 +35,11 @@ public class Main extends Canvas implements Runnable {
 	TrackingZone tz;
 	SafeZone sz;
 	
-	Score score;
-	
 	public Main() {
 		sh = new ScreenHandler();
 		sz = new SafeZone();
 		tz = new TrackingZone();
 		az = new Area51Zone();
-		score = new Score(WIDTH);
 	}
 	
 	public static void main(String[] args) {
@@ -71,13 +67,19 @@ public class Main extends Canvas implements Runnable {
 		
 		for (int i = 0; i <= 10; i++) {
 			
-			int x = rand.nextInt(800*2-64);
+			int x = rand.nextInt(900);
 			
 			if (x < 64) {
 				x = 64;
 			}
 			
-			gh.addObject(new Player(x, 100, ObjectId.Player, gh, i));
+			int y = rand.nextInt(6000);
+			
+			if (y < 32) {
+				y = 32;
+			}
+			
+			gh.addObject(new Player(x, y, ObjectId.Player, gh, i));
 		}
 		
 		gh.createLevel();
@@ -152,10 +154,13 @@ public class Main extends Canvas implements Runnable {
 		
 		g2d.translate(cam.getX(), cam.getY());
 		
+		
+		//Use this to view the full map. Could create a minimap
+		//g2d.scale(0.1, 0.1);
+		
 		sz.display(g);
 		tz.display(g);
 		az.display(g);
-		score.display(g);
 		
 		gh.render(g);
 		

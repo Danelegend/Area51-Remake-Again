@@ -220,6 +220,25 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 		
+		if (e.getKeyChar() == 'N' || e.getKeyChar() == 'n') {
+			for (int i = 0; i < gh.obj.size(); i++) {
+				GameObject tempObj = gh.obj.get(i);
+				
+				if (tempObj.getId() == ObjectId.Player) {
+					Player p = (Player) tempObj;
+					
+					if (p.isControlled()) {
+						if (p.narutoActive() == false) {
+							p.setNarutoActive(true);
+							p.setNarutoAvaliable(false);
+						}
+					}
+					
+				}
+				
+			}
+		}
+		
 		for (int i = 0; i < gh.obj.size(); i++) {
 			GameObject tempObj = gh.obj.get(i);
 			
