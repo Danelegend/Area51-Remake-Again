@@ -46,27 +46,32 @@ public class Enemy extends GameObject {
 		
 		Player p = closestPlayer;
 		
+		System.out.println(p.getPlayerID());
+		
 		double pX = p.getX();
 		double pY = p.getY();
 		
+		System.out.println(pX + " " + pY);
+		System.out.println(x + " " + y);
+		
 		if (x > pX) {
-			x-=10;
+			x-=5;
 		}
 		
 		if (x < pX) {
-			x+=10;
+			x+=5;
 		}
 		
 		if (x == pX) {
-			x+=0;
+			x+=5;
 		}
 		
 		if (y > pY) {
-			y-=10;
+			y-=5;
 		}
 		
 		if (y < pY) {
-			y+=10;
+			y+=5;
 		}
 		
 		if (y == pY) {
@@ -76,7 +81,7 @@ public class Enemy extends GameObject {
 	}
 	
 	public void searchForPlayer() {		
-		double closestDist = 0;
+		double closestDist = 1000000000;
 		closestPlayer = null;
 		for (int i = 0; i < gh.obj.size(); i++) {
 			if (gh.obj.get(i).getId() == ObjectId.Player) {
@@ -84,12 +89,12 @@ public class Enemy extends GameObject {
 				
 				if (p.getZone() == "tz" || p.getZone() == "51z") {
 					double playerDistance = Math.sqrt(Math.pow((p.getX() - x), 2) + Math.pow((p.getY() - y), 2));
-					
+				
 					if (playerDistance < 0) {
 						playerDistance = playerDistance * -1;
 					}
 					
-					if (playerDistance > closestDist) {
+					if (playerDistance < closestDist) {
 						closestDist = playerDistance;
 						closestPlayer = p;
 					}
@@ -99,7 +104,6 @@ public class Enemy extends GameObject {
 						closestPlayer = null;
 					}
 				}
-				
 			}
 		}
 	}
