@@ -22,6 +22,8 @@ public class Player extends GameObject {
 	private boolean narutoActive;
 	private boolean narutoAvaliable;
 	
+	private boolean hit;
+	
 	private int counter;
 	
 	private GameHandler gh;
@@ -35,6 +37,8 @@ public class Player extends GameObject {
 		this.gh = gh;
 		
 		counter = 0;
+		
+		hit = false;
 		
 		isControlled = false;
 		narutoActive = false;
@@ -50,7 +54,6 @@ public class Player extends GameObject {
 		
 		if (narutoAvaliable == false) {
 			counter++;
-			System.out.println(counter);
 			resetCounter();
 		}
 		
@@ -107,6 +110,9 @@ public class Player extends GameObject {
 		return new Rectangle((int) x, (int) y + 5, (int) 5, (int) height - 10);
 	}
 
+	private void killPlayer() {
+		gh.killPlayerForEnemy();
+	}
 	
 	private void Collision(LinkedList<GameObject> obj) {
 		for (int i = 0; i < gh.obj.size(); i++) {
@@ -138,6 +144,27 @@ public class Player extends GameObject {
 				
 			}
 			
+			if (tempObj.getId() == ObjectId.Enemy) {
+				if (getBoundsTop().intersects(tempObj.getBounds())) {
+					hit = true;
+					killPlayer();
+				}
+				
+				if (getBounds().intersects(tempObj.getBounds())) {
+					hit = true;
+					killPlayer();
+				}
+				
+				if (getBoundsRight().intersects(tempObj.getBounds())) {
+					hit = true;
+					killPlayer();
+				}
+				
+				if (getBoundsLeft().intersects(tempObj.getBounds())) {
+					hit = true;
+					killPlayer();
+				}
+			}
 		}
 	}
 	
@@ -191,6 +218,10 @@ public class Player extends GameObject {
 		}
 		
 		return "none";
+	}
+	
+	public boolean isHit() {
+		return hit;
 	}
 	
 }
