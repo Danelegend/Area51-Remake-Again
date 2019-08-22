@@ -50,6 +50,28 @@ public class GameHandler {
  		}
  	}
  	
+ 	public void killPlayerForEnemy() {
+ 		for (int i = 0; i < obj.size(); i++) {
+ 			if (obj.get(i).getId() == ObjectId.Player) {
+ 				Player p = (Player) obj.get(i);
+ 				if (p.isHit()) {
+ 					obj.remove(i);
+ 					
+ 					for (int i2 = 0; i2 < obj.size(); i2++) {
+ 						if (obj.get(i).getId() == ObjectId.Player) {
+ 							Player p1 = (Player) obj.get(i);
+ 							
+ 							if (p1.isHit() == false) {
+ 								p1.setControlled(true);
+ 							}
+ 						}
+ 					}
+ 					
+ 				}
+ 			}
+ 		}
+ 	}
+ 	
  	public void removeAlien() {
  		for (int i = 0; i < obj.size(); i++) {
  			if (obj.get(i).getId() == ObjectId.Alien) {
