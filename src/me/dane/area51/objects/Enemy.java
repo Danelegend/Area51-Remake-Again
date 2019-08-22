@@ -16,7 +16,9 @@ public class Enemy extends GameObject {
 
     private final float width = 48;
 	private final float height = 96;
-	
+
+	private boolean trackingPlayer;
+
 	private Image img;
 	
 	private Player closestPlayer;
@@ -24,8 +26,9 @@ public class Enemy extends GameObject {
     public Enemy(float x, float y, ObjectId id, GameHandler gh) {
         super(x, y, id);
         this.gh = gh;
-        
-        String loc = "200px-Roger_Smith.png";
+
+
+        String loc = "Z:\\My Documents\\code\\Area51-Remake-Again-master\\Cleveland.png";
         
         img = Toolkit.getDefaultToolkit().getImage(loc);
     }
@@ -45,42 +48,73 @@ public class Enemy extends GameObject {
 		}
 		
 		Player p = closestPlayer;
-		
-		System.out.println(p.getPlayerID());
-		
+
 		double pX = p.getX();
 		double pY = p.getY();
-		
-		System.out.println(pX + " " + pY);
-		System.out.println(x + " " + y);
-		
+
 		if (x > pX) {
-			x-=5;
+			if (p.getZone() == "tz") {
+				x-=3;
+			}
+
+			if (p.getZone() == "51z") {
+				x-=5;
+			}
 		}
 		
 		if (x < pX) {
-			x+=5;
+			if (p.getZone() == "tz") {
+				x+=3;
+			}
+
+			if (p.getZone() == "51z") {
+				x+=5;
+			}
 		}
 		
 		if (x == pX) {
-			x+=5;
+			if (p.getZone() == "tz") {
+				x+=3;
+			}
+
+			if (p.getZone() == "51z") {
+				x+=5;
+			}
 		}
 		
 		if (y > pY) {
-			y-=5;
+			if (p.getZone() == "tz") {
+				y-=3;
+			}
+
+			if (p.getZone() == "51z") {
+				y-=5;
+			}
 		}
 		
 		if (y < pY) {
-			y+=5;
+			if (p.getZone() == "tz") {
+				y+=3;
+			}
+
+			if (p.getZone() == "51z") {
+				y+=5;
+			}
 		}
 		
 		if (y == pY) {
-			y+=0;
+			if (p.getZone() == "tz") {
+				y+=3;
+			}
+
+			if (p.getZone() == "51z") {
+				y+=5;
+			}
 		}
 		
 	}
 	
-	public void searchForPlayer() {		
+	public void searchForPlayer() {
 		double closestDist = 1000000000;
 		closestPlayer = null;
 		for (int i = 0; i < gh.obj.size(); i++) {
