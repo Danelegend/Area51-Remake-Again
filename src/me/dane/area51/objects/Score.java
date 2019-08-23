@@ -16,6 +16,12 @@ public class Score {
 	private int width;
 	private String title;
 	
+	private static int amountOfAliens = 0;
+	private static int capturedAliens = 0;
+	
+	private static int amountOfPlayers = 0;
+	private static int playersLeft = 0;
+	
 	private Camera cam;
 	
 	public Score(int width, Camera cam) {
@@ -47,6 +53,39 @@ public class Score {
 		g.setColor(Color.WHITE);
 		g.setFont(font);
 		g.drawString(title, x, y);
+	}
+	
+	public static void addPlayer() {
+		amountOfPlayers++;
+		playersLeft++;
+	}
+	
+	public static void removePlayer() {
+		playersLeft--;
+	}
+	
+	public static void addAlien() {
+		amountOfAliens++;
+	}
+	
+	public static void capturedAliens() {
+		capturedAliens++;
+	}
+	
+	public static int getAmountOfCapturedAliens() {
+		return capturedAliens;
+	}
+	
+	public static int getAmountOfAliens() {
+		return amountOfAliens;
+	}
+	
+	public static int getAmountOfPlayers() {
+		return amountOfPlayers;
+	}
+
+	public static int getAmountOfPlayersLeft() {
+		return playersLeft;
 	}
 	
 }
