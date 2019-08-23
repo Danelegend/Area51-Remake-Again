@@ -34,8 +34,8 @@ public class MainMenu extends Menu {
 		super.paintComponent(g);
 		
 		drawTitle(g, 75, "Area51", Color.CYAN, "Comic Sans MS", 70, Font.PLAIN);
-		drawButton(g, 160, 500, 100, 700, Color.RED, "test", Color.BLACK, "Comic Sans MS", 70, Font.PLAIN);
-		drawButton(g, 160, 650, 100, 700, Color.RED, "test2", Color.BLACK, "Comic Sans MS", 70, Font.PLAIN);
+		drawButton(g, 160, 500, 100, 700, Color.RED, "Start Game", Color.BLACK, "Comic Sans MS", 70, Font.PLAIN);
+		drawButton(g, 160, 650, 100, 700, Color.RED, "Exit", Color.BLACK, "Comic Sans MS", 70, Font.PLAIN);
 	}
 	
 }
