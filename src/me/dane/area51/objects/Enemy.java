@@ -17,37 +17,27 @@ public class Enemy extends GameObject {
     private final float width = 48;
 	private final float height = 96;
 
-	private boolean trackingPlayer;
-
 	private Image img;
-	
-	private Player closestPlayer;
 	
     public Enemy(float x, float y, ObjectId id, GameHandler gh) {
         super(x, y, id);
         this.gh = gh;
 
 
-        String loc = "Z:\\My Documents\\code\\Area51-Remake-Again-master\\Cleveland.png";
+        String loc = "Cleveland.png";
         
         img = Toolkit.getDefaultToolkit().getImage(loc);
     }
 
     public void tick(LinkedList<GameObject> obj) {
-    	searchForPlayer();
-    	chasePlayer();
+
     }
 
 	public void render(Graphics g) {
 		g.drawImage(img, (int) x, (int) y, (int) width, (int) height, null);
 	}
 	
-	public void chasePlayer() {
-		if (closestPlayer == null) {
-			return;
-		}
-		
-		Player p = closestPlayer;
+	public void chasePlayer(Player p) {
 
 		double pX = p.getX();
 		double pY = p.getY();
@@ -112,34 +102,6 @@ public class Enemy extends GameObject {
 			}
 		}
 		
-	}
-	
-	public void searchForPlayer() {
-		double closestDist = 1000000000;
-		closestPlayer = null;
-		for (int i = 0; i < gh.obj.size(); i++) {
-			if (gh.obj.get(i).getId() == ObjectId.Player) {
-				Player p = (Player) gh.obj.get(i);
-				
-				if (p.getZone() == "tz" || p.getZone() == "51z") {
-					double playerDistance = Math.sqrt(Math.pow((p.getX() - x), 2) + Math.pow((p.getY() - y), 2));
-				
-					if (playerDistance < 0) {
-						playerDistance = playerDistance * -1;
-					}
-					
-					if (playerDistance < closestDist) {
-						closestDist = playerDistance;
-						closestPlayer = p;
-					}
-					
-				} else {
-					if (closestPlayer == null) {
-						closestPlayer = null;
-					}
-				}
-			}
-		}
 	}
 	
 	//Collision Boxes
