@@ -27,6 +27,7 @@ public class Player extends GameObject {
 	private int counter;
 
 	private GameHandler gh;
+	private Enemy closestEnemy1;
 
 	private int playerID;
 
@@ -39,7 +40,6 @@ public class Player extends GameObject {
 		counter = 0;
 
 		hit = false;
-
 		isControlled = false;
 		narutoActive = false;
 		narutoAvaliable = true;
@@ -51,7 +51,9 @@ public class Player extends GameObject {
 	}
 
 	public void tick(LinkedList<GameObject> obj) {
-
+		
+		searchForNearestEnemy();
+		
 		if (narutoAvaliable == false) {
 			counter++;
 			resetCounter();
@@ -85,6 +87,30 @@ public class Player extends GameObject {
 
 	}
 
+	public void searchForNearestEnemy() {
+		if (getZone() == "sz" || getZone() == "none") {
+			return;
+		}
+		
+		double closestEnemy = 1000000000;
+		for (int i = 0; i < gh.obj.size(); i++) {
+			if (gh.obj.get(i).getId() == ObjectId.Enemy) {
+				Enemy e = (Enemy) gh.obj.get(i);
+				double distance = Math.sqrt(Math.pow((x - e.getX()), 2) + Math.pow((y - e.getY()), 2));
+				if (distance < 0) {
+					distance = distance * -1;
+				}
+				if (distance < closestEnemy) {
+					closestEnemy = distance;
+					closestEnemy1 = e;
+				}
+			}
+		}
+		
+		closestEnemy1.chasePlayer(this);
+		
+	}
+	
 	public void render(Graphics g) {
 		String location = "5c8e54cf893930029d46f820.png";
 		Image img = Toolkit.getDefaultToolkit().getImage(location);
@@ -149,6 +175,8 @@ public class Player extends GameObject {
 					if (getZone() == "51z") {
 						hit = true;
 						killPlayer();
+						Score.removePlayer();
+						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
 					}
 				}
 
@@ -156,6 +184,8 @@ public class Player extends GameObject {
 					if (getZone() == "51z") {
 						hit = true;
 						killPlayer();
+						Score.removePlayer();
+						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
 					}
 				}
 
@@ -163,6 +193,8 @@ public class Player extends GameObject {
 					if (getZone() == "51z") {
 						hit = true;
 						killPlayer();
+						Score.removePlayer();
+						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
 					}
 				}
 
@@ -170,6 +202,8 @@ public class Player extends GameObject {
 					if (getZone() == "51z") {
 						hit = true;
 						killPlayer();
+						Score.removePlayer();
+						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
 					}
 				}
 			}
