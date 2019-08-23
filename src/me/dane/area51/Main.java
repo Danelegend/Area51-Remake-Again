@@ -6,12 +6,12 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 import me.dane.area51.events.KeyInput;
 import me.dane.area51.framework.Camera;
 import me.dane.area51.framework.ObjectId;
 import me.dane.area51.objects.Player;
+import me.dane.area51.objects.Score;
 import me.dane.area51.zone.Area51Zone;
 import me.dane.area51.zone.SafeZone;
 import me.dane.area51.zone.TrackingZone;
@@ -35,7 +35,9 @@ public class Main extends Canvas implements Runnable {
 	TrackingZone tz;
 	SafeZone sz;
 	
-	public Main() {
+	public Main(GameHandler gh) {
+		this.gh = gh;
+		
 		sh = new ScreenHandler();
 		sz = new SafeZone();
 		tz = new TrackingZone();
@@ -44,7 +46,7 @@ public class Main extends Canvas implements Runnable {
 	
 	public static void main(String[] args) {
 		
-		Window w = new Window(800, 600, "Area-51", new Main());
+		Window w = new Window(800, 600, "Area-51", new Main(new GameHandler(10, 51, 10)));
 		
 		EventQueue.invokeLater(new Runnable() {
 		
@@ -60,27 +62,7 @@ public class Main extends Canvas implements Runnable {
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
 		
-		gh = new GameHandler();
-		
 		cam = new Camera(0, 0);
-		Random rand = new Random();
-		
-		for (int i = 0; i <= 10; i++) {
-			
-			int x = rand.nextInt(900);
-			
-			if (x < 64) {
-				x = 64;
-			}
-			
-			int y = rand.nextInt(6000);
-			
-			if (y < 32) {
-				y = 32;
-			}
-			
-			gh.addObject(new Player(x, y, ObjectId.Player, gh, i));
-		}
 		
 		gh.createLevel();
 		
@@ -135,6 +117,10 @@ public class Main extends Canvas implements Runnable {
 				}
 			}
 		}
+		
+		if (Score.getAmountOfCapturedAliens() == Score.getAmountOfAliens() || Score.getAmountOfPlayersLeft() == 0) {
+			nextLevel();
+		}
 	}
 	
 	private void render() {
@@ -183,6 +169,10 @@ public class Main extends Canvas implements Runnable {
 	
 	public ScreenHandler getScreenHandler() {
 		return sh;
+	}
+	
+	private void nextLevel() {
+		this.start();
 	}
 	
 }
