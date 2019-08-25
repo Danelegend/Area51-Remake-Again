@@ -1,28 +1,29 @@
 package me.dane.area51.menu;
 
-import me.dane.area51.ScreenHandler;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+
 import me.dane.area51.Window;
 import me.dane.area51.events.ButtonClickEvent;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class GameOver extends Menu {
 
-    private JFrame game;
-    private ScreenHandler sh;
+	private static final long serialVersionUID = 1L;
+	
+	private JFrame game;
     private Window w;
 
-    public GameOver(JFrame game, ScreenHandler sh, Window w) {
+    public GameOver(JFrame game, Window w) {
         this.game = game;
-        this.sh = sh;
         this.w = w;
         inMainMenu();
     }
 
     private void inMainMenu() {
-        setBackground("MainMenuBackground.jpg");
-        addMouseListener(new ButtonClickEvent(game, sh, w));
+        addMouseListener(new ButtonClickEvent(game, w));
     }
 
     @Override
@@ -33,6 +34,8 @@ public class GameOver extends Menu {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         drawTitle(g, getHeight()/2, "Game Over!", Color.WHITE, "Comic Sans MS", 64, Font.BOLD);
+        drawTitle(g, (int) ((int) getHeight()/1.7), "Click to play again!", Color.WHITE, "Comic Sans MS", 32, Font.BOLD);
+        
     }
 
 }
