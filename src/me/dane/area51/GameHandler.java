@@ -135,5 +135,17 @@ public class GameHandler {
 			}
 
 	}
+	
+	public int getAmountOfPlayers() {
+		return amountOfPlayers;
+	}
+	
+	public int getAmountOfAliens() {
+		return amountOfAliens;
+	}
+	
+	public int getAmountOfEnemies() {
+		return amountOfEnemies;
+	}
 
 }
