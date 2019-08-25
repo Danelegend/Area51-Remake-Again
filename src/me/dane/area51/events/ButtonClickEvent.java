@@ -6,27 +6,25 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 
 import me.dane.area51.ScreenHandler;
+import me.dane.area51.StaticWindow;
 import me.dane.area51.Window;
 
 public class ButtonClickEvent implements MouseListener {
-
-	private ScreenHandler sh;
+	
 	private JFrame menu;
 	private Window w;
 
-	public ButtonClickEvent(JFrame menu, ScreenHandler sh, Window w) {
-		this.sh = sh;
+	public ButtonClickEvent(JFrame menu, Window w) {
 		this.menu = menu;
 		this.w = w;
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("test");
-		if (sh.getScreenNum() == 1) {
+		if (ScreenHandler.getScreenNum() == 1) {
 			
 			if ((e.getX() >= 160 && e.getX() <= e.getX() + 700) && (e.getY() >= 500 && e.getY() <= 500 + 100)) {
-				sh.setScreenNum(2);
-				System.out.println(sh.getScreenNum());
+				ScreenHandler.setScreenNum(2);
+				System.out.println(ScreenHandler.getScreenNum());
 				w.checker();
 				menu.dispose();
 			}
@@ -36,23 +34,30 @@ public class ButtonClickEvent implements MouseListener {
 			}
 
 		}
+		
+		if (ScreenHandler.getScreenNum() == 3) {
+			menu.dispose();
+			ScreenHandler.setScreenNum(2);
+			StaticWindow.getWindow().checker();
+		}
+		
+		if (ScreenHandler.getScreenNum() == 4) {
+			menu.dispose();
+			ScreenHandler.setScreenNum(5);
+			StaticWindow.getWindow().checker();
+		}
+		
 	}
 
-	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
-	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
-	@Override
 	public void mousePressed(MouseEvent e) {
-		mouseClicked(e);
-
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
