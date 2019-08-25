@@ -5,18 +5,14 @@ public class ScreenHandler {
 	// 1 = menu
 	// 2 = game
 	
-	private int screenNum;
+	private static int screenNum = 1;
 	
-	public ScreenHandler() {
-		screenNum = 1;
-	}
-	
-	public int getScreenNum() {
+	public static int getScreenNum() {
 		return screenNum;
 	}
 	
-	public void setScreenNum(int num) {
-		this.screenNum = num;
+	public static void setScreenNum(int num) {
+		screenNum = num;
 	}
 	
 }
