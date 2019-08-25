@@ -62,6 +62,9 @@ public class Score {
 	
 	public static void removePlayer() {
 		playersLeft--;
+		if (playersLeft < 0) {
+			playersLeft = 0;
+		}
 	}
 	
 	public static void addAlien() {
@@ -86,6 +89,13 @@ public class Score {
 
 	public static int getAmountOfPlayersLeft() {
 		return playersLeft;
+	}
+	
+	public static void reset() {
+		playersLeft = 0;
+		amountOfPlayers = 0;
+		amountOfAliens = 0;
+		capturedAliens = 0;
 	}
 	
 }
