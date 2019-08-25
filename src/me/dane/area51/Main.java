@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import me.dane.area51.events.GameButtonClickEvent;
 import me.dane.area51.events.KeyInput;
 import me.dane.area51.framework.Camera;
 import me.dane.area51.framework.ObjectId;
@@ -26,8 +27,6 @@ public class Main extends Canvas implements Runnable {
 	public static int WIDTH;
 	public static int HEIGHT;
 	
-	
-	ScreenHandler sh;
 	GameHandler gh;
 	Camera cam;
 	
@@ -38,7 +37,6 @@ public class Main extends Canvas implements Runnable {
 	public Main(GameHandler gh) {
 		this.gh = gh;
 		
-		sh = new ScreenHandler();
 		sz = new SafeZone();
 		tz = new TrackingZone();
 		az = new Area51Zone();
@@ -46,7 +44,9 @@ public class Main extends Canvas implements Runnable {
 	
 	public static void main(String[] args) {
 		
-		Window w = new Window(800, 600, "Area-51", new Main(new GameHandler(10, 51, 10)));
+		Window w = new Window(800, 600, "Area-51");
+		
+		StaticWindow.setWindow(w);
 		
 		EventQueue.invokeLater(new Runnable() {
 		
@@ -67,6 +67,7 @@ public class Main extends Canvas implements Runnable {
 		gh.createLevel();
 		
 		this.addKeyListener(new KeyInput(gh, cam));
+		this.addMouseListener(new GameButtonClickEvent(gh.obj));
 	}
 	
 	@Override
@@ -118,8 +119,12 @@ public class Main extends Canvas implements Runnable {
 			}
 		}
 		
-		if (Score.getAmountOfCapturedAliens() == Score.getAmountOfAliens() || Score.getAmountOfPlayersLeft() == 0) {
+		if (Score.getAmountOfCapturedAliens() == Score.getAmountOfAliens()) {
 			nextLevel();
+		}
+		
+		if (Score.getAmountOfPlayersLeft() == 0) {
+			gameOver();
 		}
 	}
 	
@@ -167,12 +172,34 @@ public class Main extends Canvas implements Runnable {
 		thread.start();
 	}
 	
-	public ScreenHandler getScreenHandler() {
-		return sh;
+	@SuppressWarnings("deprecation")
+	public synchronized void stop() {
+		running = false;
+		thread.stop();
+	}
+	
+	private void gameOver() {
+		ScreenHandler.setScreenNum(3);
+		StaticWindow.getWindow().checker();
+		stop();
 	}
 	
 	private void nextLevel() {
-		this.start();
+		int amountOfPlayers = gh.getAmountOfPlayers();
+		int amountOfAliens = gh.getAmountOfAliens();
+		int amountOfEnemies = (int) ((int) gh.getAmountOfEnemies() * 1.25);
+		
+		StaticWindow.getWindow().setAmountOfAliens(amountOfAliens);
+		StaticWindow.getWindow().setAmountOfEnemies(amountOfEnemies);
+		StaticWindow.getWindow().setAmountOfPlayers(amountOfPlayers);
+		
+		Score.reset();
+		
+		ScreenHandler.setScreenNum(5);
+		
+		StaticWindow.getWindow().checker();
+		
+		stop();
 	}
 	
 }
