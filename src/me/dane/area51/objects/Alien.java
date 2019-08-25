@@ -14,6 +14,8 @@ public class Alien extends GameObject {
     private final int width = 50;
     private final int height = 100;
 
+    private int xSpeed = 1;
+    
     private boolean hit;
 
     public Alien(float x, float y, ObjectId id, GameHandler gh) {
@@ -27,9 +29,8 @@ public class Alien extends GameObject {
     private void collision(LinkedList<GameObject> obj) {
         for (int i = 0; i < obj.size(); i++) {
             GameObject tempObj = gh.obj.get(i);
-
+            
             if (tempObj.getId() == ObjectId.Player) {
-
                 if (getBoundsTop().intersects(tempObj.getBounds())) {
                     hit = true;
                     removeAlien();
@@ -61,6 +62,19 @@ public class Alien extends GameObject {
 
     public void tick(LinkedList<GameObject> obj) {
         collision(obj);
+        moveAlien();
+    }
+    
+    public void moveAlien() {
+    	x = x + (2 * xSpeed);
+    	
+    	if (x >= 4000 - 64 + 1497) {
+    		xSpeed = xSpeed * -1;
+    	}
+    	
+    	if (x <= 4002) {
+    		xSpeed = xSpeed * -1;
+    	}
     }
 
     public void render(Graphics g) {
