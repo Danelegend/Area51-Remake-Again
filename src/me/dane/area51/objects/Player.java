@@ -52,7 +52,7 @@ public class Player extends GameObject {
 
 	public void tick(LinkedList<GameObject> obj) {
 		
-		searchForNearestEnemy();
+		//searchForNearestEnemy();
 		
 		if (narutoAvaliable == false) {
 			counter++;
@@ -87,7 +87,8 @@ public class Player extends GameObject {
 
 	}
 
-	public void searchForNearestEnemy() {
+	//Use this searching method if you want a max of one alien to attack 1 player.
+	/*public void searchForNearestEnemy() {
 		if (getZone() == "sz" || getZone() == "none") {
 			return;
 		}
@@ -109,7 +110,7 @@ public class Player extends GameObject {
 		
 		closestEnemy1.chasePlayer(this);
 		
-	}
+	}*/
 	
 	public void render(Graphics g) {
 		String location = "5c8e54cf893930029d46f820.png";
@@ -136,8 +137,10 @@ public class Player extends GameObject {
 		return new Rectangle((int) x, (int) y + 5, (int) 5, (int) height - 10);
 	}
 
-	private void killPlayer() {
+	public void killPlayer() {
 		gh.killPlayerForEnemy();
+		Score.removePlayer();
+		System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
 	}
 
 	private void Collision(LinkedList<GameObject> obj) {
@@ -145,19 +148,17 @@ public class Player extends GameObject {
 			GameObject tempObj = gh.obj.get(i);
 
 			if (tempObj.getId() == ObjectId.Block) {
-
+				
+				if (x > 64 && x < 4400 && y > 64 && y < 6800) {
+					return;
+				}
+				
 				if (getBoundsTop().intersects(tempObj.getBounds())) {
 					y = tempObj.getY() + 32;
-					velY = 0;
 				}
 
 				if (getBounds().intersects(tempObj.getBounds())) {
 					y = tempObj.getY() - height;
-					velY = 0;
-					falling = false;
-					jumping = false;
-				} else {
-					falling = true;
 				}
 
 				if (getBoundsRight().intersects(tempObj.getBounds())) {
@@ -169,47 +170,9 @@ public class Player extends GameObject {
 				}
 
 			}
-
-			if (tempObj.getId() == ObjectId.Enemy) {
-				if (getBoundsTop().intersects(tempObj.getBounds())) {
-					if (getZone() == "51z") {
-						hit = true;
-						killPlayer();
-						Score.removePlayer();
-						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
-					}
-				}
-
-				if (getBounds().intersects(tempObj.getBounds())) {
-					if (getZone() == "51z") {
-						hit = true;
-						killPlayer();
-						Score.removePlayer();
-						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
-					}
-				}
-
-				if (getBoundsRight().intersects(tempObj.getBounds())) {
-					if (getZone() == "51z") {
-						hit = true;
-						killPlayer();
-						Score.removePlayer();
-						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
-					}
-				}
-
-				if (getBoundsLeft().intersects(tempObj.getBounds())) {
-					if (getZone() == "51z") {
-						hit = true;
-						killPlayer();
-						Score.removePlayer();
-						System.out.println(Score.getAmountOfPlayersLeft() + "/" + Score.getAmountOfPlayers());
-					}
-				}
-			}
 		}
 	}
-
+	
 	public void setControlled(boolean controlled) {
 		this.isControlled = controlled;
 	}
@@ -264,6 +227,10 @@ public class Player extends GameObject {
 
 	public boolean isHit() {
 		return hit;
+	}
+	
+	public void setHit(boolean boo) {
+		this.hit = boo;
 	}
 
 }
